@@ -1,0 +1,41 @@
+﻿@model HotelFlightMVC.Models.FlightTicket
+@{
+    ViewData["Title"] = "Buy Flight Ticket";
+}
+
+<header>
+    <nav id="navbar">
+        <div class="container">
+            <h1 class="logo"><a href="@Url.Action("Index", "Home")">HFT</a></h1>
+            <ul>
+                <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+                <li><a href="@Url.Action("About", "Home")">About</a></li>
+                <li><a href="@Url.Action("Contact", "Home")">Contact</a></li>
+                <li><a href="@Url.Action("Privacy", "Home")">Privacy</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<div class="container my-5">
+    <h1 class="text-center">Flight Ticket Purchase</h1>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg">
+                <img src="https://via.placeholder.com/500x200" class="card-img-top" alt="Flight Image">
+                <div class="card-body">
+                    <h5 class="card-title">Airline: @Model.Airline</h5>
+                    <p class="card-text">Flight Number: @Model.FlightNumber</p>
+                    <p class="card-text">From: @Model.DepartureCity</p>
+                    <p class="card-text">To: @Model.DestinationCity</p>
+                    <p class="card-text">Price: $@Model.Price</p>
+                    <p class="card-text">Departure Date: @Model.DepartureDate</p>
+                    <form asp-action="BuyConfirmed" method="post">
+                        <input type="hidden" asp-for="Id" />
+                        <button type="submit" class="btn btn-success btn-block">Confirm Purchase</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

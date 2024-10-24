@@ -1,0 +1,35 @@
+﻿@model HotelFlightMVC.Models.HotelRoom
+@{
+    ViewData["Title"] = "Delete Hotel Room";
+}
+
+<header>
+    <nav id="navbar">
+        <div class="container">
+            <h1 class="logo"><a href="@Url.Action("Index", "Home")">HFT</a></h1>
+            <ul>
+                <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+                <li><a href="@Url.Action("About", "Home")">About</a></li>
+                <li><a href="@Url.Action("Contact", "Home")">Contact</a></li>
+                <li><a href="@Url.Action("Privacy", "Home")">Privacy</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<div class="container my-5">
+    <h1 class="text-center text-danger">Cancel Booking Confirmation</h1>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="alert alert-danger text-center">
+                <h4>Are you sure you want to canel this hotel room reservation?</h4>
+                <p>Room Name: @Model.Name</p>
+                <form asp-action="DeleteConfirmed">
+                    <input type="hidden" asp-for="Id" />
+                    <button type="submit" class="btn btn-danger">Yes, Cancel My Reservation</button>
+                    <a href="@Url.Action("Index")" class="btn btn-secondary">No, Do Not Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

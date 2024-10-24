@@ -1,0 +1,47 @@
+﻿@model IEnumerable<HotelFlightMVC.Models.FlightTicket>
+@{
+    ViewData["Title"] = "Available Flight Tickets";
+}
+
+<header>
+    <nav id="navbar">
+        <div class="container">
+            <h1 class="logo"><a href="@Url.Action("Index", "Home")">HFT</a></h1>
+            <ul>
+                <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+                <li><a href="@Url.Action("About", "Home")">About</a></li>
+                <li><a href="@Url.Action("Contact", "Home")">Contact</a></li>
+                <li><a href="@Url.Action("Privacy", "Home")">Privacy</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<div class="container my-5">
+    <h1 class="text-center">Available Flight Tickets</h1>
+    <div class="row">
+        @if (Model != null && Model.Any())
+        {
+            foreach (var ticket in Model)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm">
+                        <img src="https://via.placeholder.com/350x150" class="card-img-top" alt="Flight Image">
+                        <div class="card-body">
+                            <h5 class="card-title">Airline: @ticket.Airline</h5>
+                            <p class="card-text">Flight Number: @ticket.FlightNumber</p>
+                            <p class="card-text">From: @ticket.DepartureCity</p>
+                            <p class="card-text">To: @ticket.DestinationCity</p>
+                            <p class="card-text">Price: $@ticket.Price</p>
+                            <a href="@Url.Action("Buy", new { id = ticket.Id })" class="btn btn-primary btn-block">Buy Ticket</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <p class="text-center">No flight tickets available at the moment.</p>
+        }
+    </div>
+</div>

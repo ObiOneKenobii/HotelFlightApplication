@@ -1,0 +1,38 @@
+﻿@model HotelFlightMVC.Models.HotelRoom
+@{
+    ViewData["Title"] = "Hotel Room Details";
+}
+
+<header>
+    <nav id="navbar">
+        <div class="container">
+            <h1 class="logo"><a href="@Url.Action("Index", "Home")">HFT</a></h1>
+            <ul>
+                <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+                <li><a href="@Url.Action("About", "Home")">About</a></li>
+                <li><a href="@Url.Action("Contact", "Home")">Contact</a></li>
+                <li><a href="@Url.Action("Privacy", "Home")">Privacy</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<div class="container my-5">
+    <h1 class="text-center">Hotel Room Details</h1>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg">
+                <img src="https://via.placeholder.com/500x200" class="card-img-top" alt="Room Image">
+                <div class="card-body">
+                    <h5 class="card-title">@Model.Name</h5>
+                    <p class="card-text">Room Type: @Model.RoomType</p>
+                    <p class="card-text">Capacity: @Model.Capacity</p>
+                    <p class="card-text">Price: $@Model.PricePerNight per night</p>
+                    <p class="card-text">Nights: @Model.Nights</p>
+                    <a href="@Url.Action("Edit", new { id = Model.Id })" class="btn btn-secondary">Edit</a>
+                    <a href="@Url.Action("Delete", new { id = Model.Id })" class="btn btn-danger">Delete</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

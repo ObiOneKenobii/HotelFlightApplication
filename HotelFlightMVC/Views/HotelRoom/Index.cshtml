@@ -1,0 +1,46 @@
+﻿@model IEnumerable<HotelFlightMVC.Models.HotelRoom>
+@{
+    ViewData["Title"] = "Available Hotel Rooms";
+}
+
+<header>
+    <nav id="navbar">
+        <div class="container">
+            <h1 class="logo"><a href="@Url.Action("Index", "Home")">HFT</a></h1>
+            <ul>
+                <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+                <li><a href="@Url.Action("About", "Home")">About</a></li>
+                <li><a href="@Url.Action("Contact", "Home")">Contact</a></li>
+                <li><a href="@Url.Action("Privacy", "Home")">Privacy</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<div class="container my-5">
+    <h1 class="text-center">Available Hotel Rooms</h1>
+    <div class="row mt-4">
+        @if (Model != null)
+        {
+            foreach (var room in Model)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm">
+                        <img src="https://via.placeholder.com/350x150" class="card-img-top" alt="Room Image">
+                        <div class="card-body">
+                            <h5 class="card-title">@room.Name</h5>
+                            <p class="card-text">Room Type: @room.RoomType</p>
+                            <p class="card-text">Capacity: @room.Capacity</p>
+                            <p class="card-text">Price: $@room.PricePerNight per night</p>
+                            <a href="@Url.Action("Details", new { id = room.Id })" class="btn btn-primary btn-block">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <p>No hotel rooms available at the moment.</p>
+        }
+    </div>
+</div>

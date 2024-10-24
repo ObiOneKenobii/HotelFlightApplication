@@ -1,0 +1,142 @@
+﻿@model HotelFlightMVC.Models.Cart
+
+@{
+    ViewData["Title"] = "Your Cart";
+}
+
+<header>
+    <nav id="navbar">
+        <div class="container">
+            <h1 class="logo"><a href="@Url.Action("Index", "Home")">HFT</a></h1>
+            <ul>
+                <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+                <li><a href="@Url.Action("About", "Home")">About</a></li>
+                <li><a href="@Url.Action("Contact", "Home")">Contact</a></li>
+                <li><a href="@Url.Action("Privacy", "Home")">Privacy</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<h2>Your Cart</h2>
+
+@if (Model.FlightTicket == null && Model.HotelRoom == null)
+{
+    <p>Your cart is empty. Add items to proceed.</p>
+}
+else
+{
+    <div>
+        <h3>Flight Ticket</h3>
+        @if (Model.FlightTicket != null)
+        {
+            <p>Flight: @Model.FlightTicket.Airline</p>
+            <p>Number of Tickets: @Model.NumberOfTickets</p>
+            <p>Price: @Model.FlightTicket.Price</p>
+        }
+
+        <h3>Hotel Room</h3>
+        @if (Model.HotelRoom != null)
+        {
+            <p>Hotel: @Model.HotelRoom.Name</p>
+            <p>Number of Rooms: @Model.NumberOfRooms</p>
+            <p>Price: @Model.HotelRoom.PricePerNight </p>
+        }
+
+        <h4>Total Price: @Model.TotalPrice</h4>
+
+        <form asp-action="Checkout" method="post">
+            <button type="submit" class="btn btn-primary">Checkout</button>
+        </form>
+    </div>
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@* @model HotelFlightMVC.Models.Cart
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart</title>
+    <link rel="stylesheet" href="~/css/style.css">
+</head>
+<body>
+    <h1>Your Cart</h1>
+
+    @if (Model == null || (Model.NumberOfTickets == 0 && Model.NumberOfRooms == 0))
+    {
+        <p>Your cart is empty. Please add items before proceeding to checkout.</p>
+    }
+    else
+    {
+        <h2>Flight Tickets</h2>
+        @if (Model.FlightTicket != null)
+        {
+            <div>
+                <h3>@Model.FlightTicket.Airline</h3>
+                <p>Price: @Model.FlightTicket.Price</p>
+                <p>Quantity: @Model.NumberOfTickets</p>
+            </div>
+        }
+
+        <h2>Hotel Rooms</h2>
+        @if (Model.HotelRoom != null)
+        {
+            <div>
+                <h3>@Model.HotelRoom.Name</h3>
+                <p>Price per Night: @Model.HotelRoom.PricePerNight</p>
+                <p>Quantity: @Model.NumberOfRooms</p>
+                <p>Nights: @Model.HotelRoom.Nights</p>
+            </div>
+        }
+
+        <h3>Total Price: @Model.TotalPrice</h3>
+
+        <form asp-action="Checkout" method="post">
+            <button type="submit">Proceed to Checkout</button>
+        </form>
+    }
+
+    <a href="@Url.Action("Index", "Home")">Continue Shopping</a>
+</body>
+</html>
+ *@
