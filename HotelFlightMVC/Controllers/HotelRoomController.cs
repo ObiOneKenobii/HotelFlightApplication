@@ -21,8 +21,8 @@ namespace HotelFlightMVC.Controllers
             return View(hotelRooms);
         }
 
-        // Display details of a hotel room for booking
-        public async Task<IActionResult> Book(int id)
+        // Display details of a hotel room for booking (equivalent to "Buy")
+        public async Task<IActionResult> Buy(int id)
         {
             var hotelRoom = await _hotelRoomService.GetHotelRoom(id);
             if (hotelRoom == null)
@@ -32,19 +32,26 @@ namespace HotelFlightMVC.Controllers
             return View(hotelRoom);
         }
 
-        // Handle hotel room booking confirmation
+        // Handle hotel room booking confirmation (equivalent to "BuyConfirmed")
         [HttpPost]
-        public async Task<IActionResult> BookConfirmed(int id)
+        public async Task<IActionResult> BuyConfirmed(int id)
         {
             var hotelRoom = await _hotelRoomService.GetHotelRoom(id);
             if (hotelRoom != null)
             {
-                // Logic for booking (add to Cart)
+                // Logic for handling booking (can be added to Cart)
             }
 
             // Redirect to the Cart after booking
-            return RedirectToAction("Index", "Cart");
+            return RedirectToAction("MakePayment");
         }
+
+        // Display MakePayment page after booking is confirmed
+        public IActionResult MakePayment()
+        {
+            return View();
+        }
+
 
         // Create HotelRoom view
         public IActionResult Create()
@@ -105,6 +112,7 @@ namespace HotelFlightMVC.Controllers
         }
 
         // Confirm deletion of HotelRoom
+        [ValidateAntiForgeryToken]
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {

@@ -10,10 +10,12 @@ namespace HotelFlightMVC.Services
     public class FlightTicketService
     {
         private readonly HttpClient _httpClient;
+        private readonly CartService _cartService;
 
-        public FlightTicketService(HttpClient httpClient)
+        public FlightTicketService(HttpClient httpClient, CartService cartService)
         {
             _httpClient = httpClient;
+            _cartService = cartService;
         }
 
         public async Task<IEnumerable<FlightTicket>> GetAllFlightTickets()
@@ -58,6 +60,13 @@ namespace HotelFlightMVC.Services
         {
             var response = await _httpClient.DeleteAsync($"api/FlightTicket/{id}");
             return response.IsSuccessStatusCode;
+        }
+
+        // Method to add a flight ticket to the user's cart
+        public async Task<bool> AddTicketToCart(string userId, FlightTicket flightTicket)
+        {
+            // Use the CartService to add the ticket to the cart
+            return await _cartService.AddTicketToCart(userId, flightTicket);
         }
     }
 }

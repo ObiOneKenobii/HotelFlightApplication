@@ -27,7 +27,7 @@
                 <form asp-action="DeleteConfirmed">
                     <input type="hidden" asp-for="Id" />
                     <button type="submit" class="btn btn-danger">Yes, Cancel My Reservation</button>
-                    <a href="@Url.Action("Index")" class="btn btn-secondary">No, Do Not Cancel</a>
+                    <a href="@Url.Action("HotelRoom","Index")" class="btn btn-secondary">No, Do Not Cancel</a>
                 </form>
             </div>
         </div>

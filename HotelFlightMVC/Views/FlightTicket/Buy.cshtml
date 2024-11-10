@@ -2,11 +2,11 @@
 @{
     ViewData["Title"] = "Buy Flight Ticket";
 }
-
+  
 <header>
     <nav id="navbar">
         <div class="container">
-            <h1 class="logo"><a href="@Url.Action("Index", "Home")">HFT</a></h1>
+            <h1 class="logo"><a href="@Url.Action("Index", "Home")">HotelFlightBooking</a></h1>
             <ul>
                 <li><a href="@Url.Action("Index", "Home")">Home</a></li>
                 <li><a href="@Url.Action("About", "Home")">About</a></li>
@@ -22,7 +22,7 @@
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card shadow-lg">
-                <img src="https://via.placeholder.com/500x200" class="card-img-top" alt="Flight Image">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvVQU2fl88dKQhVyDL5OzcujF5f8ZN4IzcoA&s" class="card-img-top" alt="Flight Image">
                 <div class="card-body">
                     <h5 class="card-title">Airline: @Model.Airline</h5>
                     <p class="card-text">Flight Number: @Model.FlightNumber</p>
@@ -30,10 +30,12 @@
                     <p class="card-text">To: @Model.DestinationCity</p>
                     <p class="card-text">Price: $@Model.Price</p>
                     <p class="card-text">Departure Date: @Model.DepartureDate</p>
-                    <form asp-action="BuyConfirmed" method="post">
+                    <form asp-action="BuyConfirmed" asp-controller="FlightTicket" method="post">
                         <input type="hidden" asp-for="Id" />
                         <button type="submit" class="btn btn-success btn-block">Confirm Purchase</button>
                     </form>
+
+
                 </div>
             </div>
         </div>

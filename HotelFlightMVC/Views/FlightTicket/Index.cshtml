@@ -6,7 +6,7 @@
 <header>
     <nav id="navbar">
         <div class="container">
-            <h1 class="logo"><a href="@Url.Action("Index", "Home")">HFT</a></h1>
+            <h1 class="logo"><a href="@Url.Action("Index", "Home")">HotelFlightBooking</a></h1>
             <ul>
                 <li><a href="@Url.Action("Index", "Home")">Home</a></li>
                 <li><a href="@Url.Action("About", "Home")">About</a></li>
@@ -26,14 +26,18 @@
             {
                 <div class="col-md-4 mb-4">
                     <div class="card shadow-sm">
-                        <img src="https://via.placeholder.com/350x150" class="card-img-top" alt="Flight Image">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvVQU2fl88dKQhVyDL5OzcujF5f8ZN4IzcoA&s" class="card-img-top" alt="Flight Image">
                         <div class="card-body">
                             <h5 class="card-title">Airline: @ticket.Airline</h5>
                             <p class="card-text">Flight Number: @ticket.FlightNumber</p>
                             <p class="card-text">From: @ticket.DepartureCity</p>
                             <p class="card-text">To: @ticket.DestinationCity</p>
                             <p class="card-text">Price: $@ticket.Price</p>
+                           
                             <a href="@Url.Action("Buy", new { id = ticket.Id })" class="btn btn-primary btn-block">Buy Ticket</a>
+                            @* <form asp-action="Delete" asp-route-id="@ticket.Id" method="post">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form> *@
                         </div>
                     </div>
                 </div>
