@@ -23,7 +23,7 @@ namespace HotelFlightMVC.Services
         {
             try
             {
-                return await _httpClient.GetFromJsonAsync<IEnumerable<FlightTicket>>("https://your-api-url.com/api/FlightTicket");
+                return await _httpClient.GetFromJsonAsync<IEnumerable<FlightTicket>>("https://hotelflightapi.onrender.com");
             }
             catch (Exception ex)
             {
@@ -36,7 +36,7 @@ namespace HotelFlightMVC.Services
         {
             try
             {
-                return await _httpClient.GetFromJsonAsync<FlightTicket>($"https://your-api-url.com/api/FlightTicket/{id}");
+                return await _httpClient.GetFromJsonAsync<FlightTicket>($"https://hotelflightapi.onrender.com/FlightTicket/{id}");
             }
             catch (Exception ex)
             {
@@ -49,7 +49,7 @@ namespace HotelFlightMVC.Services
         {
             try
             {
-                var response = await _httpClient.PostAsJsonAsync("https://your-api-url.com/api/FlightTicket", flightTicket);
+                var response = await _httpClient.PostAsJsonAsync("https://hotelflightapi.onrender.com/api/FlightTicket", flightTicket);
                 response.EnsureSuccessStatusCode();
                 return await response.Content.ReadFromJsonAsync<FlightTicket>();
             }
@@ -64,7 +64,7 @@ namespace HotelFlightMVC.Services
         {
             try
             {
-                var response = await _httpClient.PutAsJsonAsync($"https://your-api-url.com/api/FlightTicket/{flightTicket.Id}", flightTicket);
+                var response = await _httpClient.PutAsJsonAsync($"https://hotelflightapi.onrender.com/api/FlightTicket/{flightTicket.Id}", flightTicket);
                 response.EnsureSuccessStatusCode();
             }
             catch (Exception ex)
@@ -78,7 +78,7 @@ namespace HotelFlightMVC.Services
         {
             try
             {
-                var response = await _httpClient.DeleteAsync($"https://your-api-url.com/api/FlightTicket/{id}");
+                var response = await _httpClient.DeleteAsync($"https://hotelflightapi.onrender.com/api/FlightTicket/{id}");
                 response.EnsureSuccessStatusCode();
             }
             catch (Exception ex)
