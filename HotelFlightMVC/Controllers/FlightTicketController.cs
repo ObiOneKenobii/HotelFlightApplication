@@ -17,14 +17,14 @@ namespace HotelFlightMVC.Controllers
         // Get all available flight tickets
         public async Task<IActionResult> Index()
         {
-            var tickets = await _flightTicketService.GetAllFlightTickets();
+            var tickets = await _flightTicketService.GetAllFlightTicketsAsync();
             return View(tickets);
         }
 
         // Display details of a flight ticket for purchase
         public async Task<IActionResult> Buy(int id)
         {
-            var ticket = await _flightTicketService.GetFlightTicket(id);
+            var ticket = await _flightTicketService.GetFlightTicketAsync(id);
             if (ticket == null)
             {
                 return NotFound();
@@ -36,21 +36,19 @@ namespace HotelFlightMVC.Controllers
         [HttpPost]
         public async Task<IActionResult> BuyConfirmed(int id)
         {
-            var ticket = await _flightTicketService.GetFlightTicket(id);
+            var ticket = await _flightTicketService.GetFlightTicketAsync(id);
             if (ticket != null)
             {
-                // Logic for handling purchase (can be saved in Cart)
-                // Placeholder for now, as Cart integration will follow
+                // Placeholder for handling purchase, integrating with Cart, etc.
             }
 
             // Redirect to HotelRoom purchase after FlightTicket
             return RedirectToAction("MakePayment");
         }
 
-
-        // Handle the Making of payments 
-
-        public IActionResult MakePayment() {
+        // Handle the Making of payments
+        public IActionResult MakePayment()
+        {
             return View();
         }
 
@@ -66,8 +64,8 @@ namespace HotelFlightMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await _flightTicketService.CreateFlightTicket(flightTicket);
-                if (result)
+                var createdTicket = await _flightTicketService.CreateFlightTicketAsync(flightTicket);
+                if (createdTicket != null)
                 {
                     return RedirectToAction(nameof(Index));
                 }
@@ -78,7 +76,7 @@ namespace HotelFlightMVC.Controllers
         // Edit FlightTicket view
         public async Task<IActionResult> Edit(int id)
         {
-            var ticket = await _flightTicketService.GetFlightTicket(id);
+            var ticket = await _flightTicketService.GetFlightTicketAsync(id);
             if (ticket == null)
             {
                 return NotFound();
@@ -92,11 +90,8 @@ namespace HotelFlightMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await _flightTicketService.UpdateFlightTicket(flightTicket);
-                if (result)
-                {
-                    return RedirectToAction(nameof(Index));
-                }
+                await _flightTicketService.UpdateFlightTicketAsync(flightTicket);
+                return RedirectToAction(nameof(Index));
             }
             return View(flightTicket);
         }
@@ -104,7 +99,7 @@ namespace HotelFlightMVC.Controllers
         // Delete FlightTicket view
         public async Task<IActionResult> Delete(int id)
         {
-            var ticket = await _flightTicketService.GetFlightTicket(id);
+            var ticket = await _flightTicketService.GetFlightTicketAsync(id);
             if (ticket == null)
             {
                 return NotFound();
@@ -116,15 +111,158 @@ namespace HotelFlightMVC.Controllers
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var result = await _flightTicketService.DeleteFlightTicket(id);
-            if (result)
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            return View();
+            await _flightTicketService.DeleteFlightTicketAsync(id);
+            return RedirectToAction(nameof(Index));
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//using HotelFlightMVC.Models;
+//using HotelFlightMVC.Services;
+//using Microsoft.AspNetCore.Mvc;
+//using System.Threading.Tasks;
+
+//namespace HotelFlightMVC.Controllers
+//{
+//    public class FlightTicketController : Controller
+//    {
+//        private readonly FlightTicketService _flightTicketService;
+
+//        public FlightTicketController(FlightTicketService flightTicketService)
+//        {
+//            _flightTicketService = flightTicketService;
+//        }
+
+//        // Get all available flight tickets
+//        public async Task<IActionResult> Index()
+//        {
+//            var tickets = await _flightTicketService.GetAllFlightTickets();
+//            return View(tickets);
+//        }
+
+//        // Display details of a flight ticket for purchase
+//        public async Task<IActionResult> Buy(int id)
+//        {
+//            var ticket = await _flightTicketService.GetFlightTicket(id);
+//            if (ticket == null)
+//            {
+//                return NotFound();
+//            }
+//            return View(ticket);
+//        }
+
+//        // Handle flight ticket purchase confirmation
+//        [HttpPost]
+//        public async Task<IActionResult> BuyConfirmed(int id)
+//        {
+//            var ticket = await _flightTicketService.GetFlightTicket(id);
+//            if (ticket != null)
+//            {
+//                // Logic for handling purchase (can be saved in Cart)
+//                // Placeholder for now, as Cart integration will follow
+//            }
+
+//            // Redirect to HotelRoom purchase after FlightTicket
+//            return RedirectToAction("MakePayment");
+//        }
+
+
+//        // Handle the Making of payments 
+
+//        public IActionResult MakePayment() {
+//            return View();
+//        }
+
+//        // Create FlightTicket view
+//        public IActionResult Create()
+//        {
+//            return View();
+//        }
+
+//        // Create FlightTicket post
+//        [HttpPost]
+//        public async Task<IActionResult> Create(FlightTicket flightTicket)
+//        {
+//            if (ModelState.IsValid)
+//            {
+//                var result = await _flightTicketService.CreateFlightTicket(flightTicket);
+//                if (result)
+//                {
+//                    return RedirectToAction(nameof(Index));
+//                }
+//            }
+//            return View(flightTicket);
+//        }
+
+//        // Edit FlightTicket view
+//        public async Task<IActionResult> Edit(int id)
+//        {
+//            var ticket = await _flightTicketService.GetFlightTicket(id);
+//            if (ticket == null)
+//            {
+//                return NotFound();
+//            }
+//            return View(ticket);
+//        }
+
+//        // Edit FlightTicket post
+//        [HttpPost]
+//        public async Task<IActionResult> Edit(FlightTicket flightTicket)
+//        {
+//            if (ModelState.IsValid)
+//            {
+//                var result = await _flightTicketService.UpdateFlightTicket(flightTicket);
+//                if (result)
+//                {
+//                    return RedirectToAction(nameof(Index));
+//                }
+//            }
+//            return View(flightTicket);
+//        }
+
+//        // Delete FlightTicket view
+//        public async Task<IActionResult> Delete(int id)
+//        {
+//            var ticket = await _flightTicketService.GetFlightTicket(id);
+//            if (ticket == null)
+//            {
+//                return NotFound();
+//            }
+//            return View(ticket);
+//        }
+
+//        // Confirm deletion of FlightTicket
+//        [HttpPost, ActionName("Delete")]
+//        public async Task<IActionResult> DeleteConfirmed(int id)
+//        {
+//            var result = await _flightTicketService.DeleteFlightTicket(id);
+//            if (result)
+//            {
+//                return RedirectToAction(nameof(Index));
+//            }
+//            return View();
+//        }
+//    }
+//}
 
 
 

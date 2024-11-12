@@ -11,23 +11,25 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 
+
+
 builder.Services.AddHttpClient<CartService>(client =>
 {
-    client.BaseAddress = new Uri("https://localhost:7257");
+    client.BaseAddress = new Uri("https://hotelflightapi.onrender.com");
 });
 
 
 
 builder.Services.AddHttpClient<HotelRoomService>(client =>
 {
-    client.BaseAddress = new Uri("https://localhost:7257");
+    client.BaseAddress = new Uri("https://hotelflightapi.onrender.com");
 });
 
 
 
 builder.Services.AddHttpClient<FlightTicketService>(client =>
 {
-    client.BaseAddress = new Uri("https://localhost:7257");
+    client.BaseAddress = new Uri("https://hotelflightapi.onrender.com");
 });
 
 
@@ -35,6 +37,20 @@ builder.Services.AddHttpClient<FlightTicketService>(client =>
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
+
+// CORS policy configuration
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        builder =>
+        {
+            builder.WithOrigins("https://ticketbookingapp-r524.onrender.com")
+                   .AllowAnyHeader()
+                   .AllowAnyMethod();
+        });
+});
+
+
 
 var app = builder.Build();
 
@@ -59,6 +75,11 @@ app.UseAuthorization();
 
 app.MapRazorPages();
 
+
+app.UseCors();
+
+var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
 
 app.MapControllerRoute(
     name: "default",
