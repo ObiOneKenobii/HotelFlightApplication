@@ -3,12 +3,13 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
 # Copy the project file and restore dependencies
-COPY ["HotelFlightAPI/HotelFLightAPI.csproj", "HotelFLightAPI.csproj"]
-RUN dotnet restore "HotelFlightAPI/HotelFLightAPI.csproj"
+COPY ["HotelFlightMVC/HotelFlightMVC.csproj", "HotelFlightMVC/"]
+RUN dotnet restore "HotelFlightMVC/HotelFlightMVC.csproj"
 
 # Copy the rest of the application code and build the app
 COPY . .
-RUN dotnet publish "HotelFlightAPI/HotelFLightAPI.csproj" -c Release -o /app/publish
+WORKDIR /src/HotelFlightMVC
+RUN dotnet publish -c Release -o /app/publish
 
 # Use the official ASP.NET Core runtime image for running the app
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
@@ -19,10 +20,4 @@ COPY --from=build /app/publish .
 EXPOSE 80
 
 # Run the app
-ENTRYPOINT ["dotnet", "HotelFlightAPI/HotelFLightAPI.dll"]
-
-
-
-
-
-
+ENTRYPOINT ["dotnet", "HotelFlightMVC.dll"]
