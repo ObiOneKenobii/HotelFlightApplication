@@ -19,11 +19,26 @@ namespace HotelFlightMVC.Services
             _logger = logger;
         }
 
+        //public async Task<IEnumerable<FlightTicket>> GetAllFlightTicketsAsync()
+        //{
+        //    try
+        //    {
+        //        return await _httpClient.GetFromJsonAsync<IEnumerable<FlightTicket>>("https://hotelflightapi.onrender.com");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex, "An error occurred while fetching flight tickets.");
+        //        throw;
+        //    }
+        //}
+
+
         public async Task<IEnumerable<FlightTicket>> GetAllFlightTicketsAsync()
         {
             try
             {
-                return await _httpClient.GetFromJsonAsync<IEnumerable<FlightTicket>>("https://hotelflightapi.onrender.com");
+                // Assuming the endpoint is at "/api/FlightTicket"
+                return await _httpClient.GetFromJsonAsync<IEnumerable<FlightTicket>>("api/FlightTicket");
             }
             catch (Exception ex)
             {
@@ -31,6 +46,7 @@ namespace HotelFlightMVC.Services
                 throw;
             }
         }
+
 
         public async Task<FlightTicket> GetFlightTicketAsync(int id)
         {

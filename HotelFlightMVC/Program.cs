@@ -29,7 +29,7 @@ builder.Services.AddHttpClient<HotelRoomService>(client =>
 
 builder.Services.AddHttpClient<FlightTicketService>(client =>
 {
-    client.BaseAddress = new Uri("https://hotelflightapi.onrender.com");
+    client.BaseAddress = new Uri("https://hotelflightapi.onrender.com/api/");
 });
 
 
