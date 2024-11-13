@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HotelFlightMVC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241024161012_TestingCarttwo")]
-    partial class TestingCarttwo
+    [Migration("20241113151640_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

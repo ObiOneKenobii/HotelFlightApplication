@@ -51,25 +51,6 @@ namespace HotelFlightMVC.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "FlightTickets",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Airline = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FlightNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DepartureCity = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DestinationCity = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DepartureDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ArrivalDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_FlightTickets", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "HotelRooms",
                 columns: table => new
                 {
@@ -208,14 +189,34 @@ namespace HotelFlightMVC.Migrations
                 {
                     table.PrimaryKey("PK_Carts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Carts_FlightTickets_FlightTicketId",
-                        column: x => x.FlightTicketId,
-                        principalTable: "FlightTickets",
-                        principalColumn: "Id");
-                    table.ForeignKey(
                         name: "FK_Carts_HotelRooms_HotelRoomId",
                         column: x => x.HotelRoomId,
                         principalTable: "HotelRooms",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FlightTickets",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Airline = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FlightNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DepartureCity = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DestinationCity = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DepartureDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ArrivalDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    CartId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FlightTickets", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_FlightTickets_Carts_CartId",
+                        column: x => x.CartId,
+                        principalTable: "Carts",
                         principalColumn: "Id");
                 });
 
@@ -267,11 +268,27 @@ namespace HotelFlightMVC.Migrations
                 name: "IX_Carts_HotelRoomId",
                 table: "Carts",
                 column: "HotelRoomId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FlightTickets_CartId",
+                table: "FlightTickets",
+                column: "CartId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Carts_FlightTickets_FlightTicketId",
+                table: "Carts",
+                column: "FlightTicketId",
+                principalTable: "FlightTickets",
+                principalColumn: "Id");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropForeignKey(
+                name: "FK_Carts_FlightTickets_FlightTicketId",
+                table: "Carts");
+
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -288,9 +305,6 @@ namespace HotelFlightMVC.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Carts");
-
-            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
@@ -298,6 +312,9 @@ namespace HotelFlightMVC.Migrations
 
             migrationBuilder.DropTable(
                 name: "FlightTickets");
+
+            migrationBuilder.DropTable(
+                name: "Carts");
 
             migrationBuilder.DropTable(
                 name: "HotelRooms");
