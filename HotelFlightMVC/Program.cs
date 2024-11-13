@@ -44,7 +44,7 @@ builder.Services.AddCors(options =>
     options.AddDefaultPolicy(
         builder =>
         {
-            builder.WithOrigins("https://ticketbookingapp-r524.onrender.com")
+            builder.WithOrigins("https://hotelflightapplication.onrender.com")
                    .AllowAnyHeader()
                    .AllowAnyMethod();
         });
