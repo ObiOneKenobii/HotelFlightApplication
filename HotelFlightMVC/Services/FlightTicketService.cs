@@ -19,31 +19,37 @@ namespace HotelFlightMVC.Services
             _logger = logger;
         }
 
-        public async Task<IEnumerable<FlightTicket>> GetAllFlightTicketsAsync()
+       
+        public async Task<IEnumerable<FlightTicket>> GetBeveragesAsync()
         {
             try
             {
-                return await _httpClient.GetFromJsonAsync<IEnumerable<FlightTicket>>("api/FlightTicket");
+                return await _httpClient.GetFromJsonAsync<IEnumerable<FlightTicket>>("https://hotelflightapi.onrender.com/api/FlightTicket");
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An error occurred while fetching flight tickets.");
+                _logger.LogError(ex, "An error occurred while fetching beverages.");
                 throw;
             }
         }
 
-        public async Task<FlightTicket> GetFlightTicketAsync(int id)
+        public async Task<FlightTicket> GetBeverageAsync(int id)
         {
             try
             {
-                return await _httpClient.GetFromJsonAsync<FlightTicket>($"api/FlightTicket/{id}");
+                return await _httpClient.GetFromJsonAsync<FlightTicket>($"https://hotelflightapi.onrender.com/api/FlightTicket/{id}");
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"An error occurred while fetching the flight ticket with ID {id}.");
+                _logger.LogError(ex, $"An error occurred while fetching the beverage with ID {id}.");
                 throw;
             }
         }
+
+
+
+
+
 
         public async Task<FlightTicket> CreateFlightTicketAsync(FlightTicket flightTicket)
         {
