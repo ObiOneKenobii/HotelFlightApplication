@@ -19,8 +19,7 @@ namespace HotelFlightMVC.Services
             _logger = logger;
         }
 
-       
-        public async Task<IEnumerable<FlightTicket>> GetBeveragesAsync()
+        public async Task<IEnumerable<FlightTicket>> GetAllFlightTicketsAsync()
         {
             try
             {
@@ -28,12 +27,12 @@ namespace HotelFlightMVC.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An error occurred while fetching beverages.");
+                _logger.LogError(ex, "An error occurred while fetching flight tickets.");
                 throw;
             }
         }
 
-        public async Task<FlightTicket> GetBeverageAsync(int id)
+        public async Task<FlightTicket> GetFlightTicketAsync(int id)
         {
             try
             {
@@ -41,21 +40,16 @@ namespace HotelFlightMVC.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"An error occurred while fetching the beverage with ID {id}.");
+                _logger.LogError(ex, $"An error occurred while fetching the flight ticket with ID {id}.");
                 throw;
             }
         }
-
-
-
-
-
 
         public async Task<FlightTicket> CreateFlightTicketAsync(FlightTicket flightTicket)
         {
             try
             {
-                var response = await _httpClient.PostAsJsonAsync("api/FlightTicket", flightTicket);
+                var response = await _httpClient.PostAsJsonAsync("https://hotelflightapi.onrender.com/api/FlightTicket", flightTicket);
                 response.EnsureSuccessStatusCode();
                 return await response.Content.ReadFromJsonAsync<FlightTicket>();
             }
@@ -70,7 +64,7 @@ namespace HotelFlightMVC.Services
         {
             try
             {
-                var response = await _httpClient.PutAsJsonAsync($"api/FlightTicket/{flightTicket.Id}", flightTicket);
+                var response = await _httpClient.PutAsJsonAsync($"https://hotelflightapi.onrender.com/api/FlightTicket/{flightTicket.Id}", flightTicket);
                 response.EnsureSuccessStatusCode();
             }
             catch (Exception ex)
@@ -84,7 +78,7 @@ namespace HotelFlightMVC.Services
         {
             try
             {
-                var response = await _httpClient.DeleteAsync($"api/FlightTicket/{id}");
+                var response = await _httpClient.DeleteAsync($"https://hotelflightapi.onrender.com/api/FlightTicket/{id}");
                 response.EnsureSuccessStatusCode();
             }
             catch (Exception ex)
