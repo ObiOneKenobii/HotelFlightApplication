@@ -7,7 +7,7 @@
 <header>
     <nav id="navbar">
         <div class="container">
-            <h1 class="logo"><a href="@Url.Action("Index", "Home")">HFT</a></h1>
+            <h1 class="logo"><a href="@Url.Action("Index", "Home")">HotelFlightBooking</a></h1>
             <ul>
                 <li><a href="@Url.Action("Index", "Home")">Home</a></li>
                 <li><a href="@Url.Action("About", "Home")">About</a></li>
@@ -18,125 +18,77 @@
     </nav>
 </header>
 
-<h2>Your Cart</h2>
-
-@if (Model.FlightTicket == null && Model.HotelRoom == null)
-{
-    <p>Your cart is empty. Add items to proceed.</p>
-}
-else
-{
-    <div>
-        <h3>Flight Ticket</h3>
-        @if (Model.FlightTicket != null)
+<div class="container my-5">
+    <h1 class="text-center" style="color: #007bff;">Your Cart</h1>
+    <div class="row justify-content-center">
+        @if (Model.FlightTicket == null && Model.HotelRoom == null)
         {
-            <p>Flight: @Model.FlightTicket.Airline</p>
-            <p>Number of Tickets: @Model.NumberOfTickets</p>
-            <p>Price: @Model.FlightTicket.Price</p>
+            <p class="text-center">Your cart is empty. Add items to proceed.</p>
         }
-
-        <h3>Hotel Room</h3>
-        @if (Model.HotelRoom != null)
+        else
         {
-            <p>Hotel: @Model.HotelRoom.Name</p>
-            <p>Number of Rooms: @Model.NumberOfRooms</p>
-            <p>Price: @Model.HotelRoom.PricePerNight </p>
+            <div class="col-md-6">
+                <div class="card shadow-lg mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h3>Flight Ticket</h3>
+                    </div>
+                    @if (Model.FlightTicket != null)
+                    {
+                        <img src="~/images/flight_placeholder.jpg" alt="Flight" class="card-img-top">
+                        <div class="card-body">
+                            <p><strong>Flight:</strong> @Model.FlightTicket.Airline</p>
+                            <p><strong>Tickets:</strong> @Model.NumberOfTickets</p>
+                            <p><strong>Price:</strong> $@Model.FlightTicket.Price</p>
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-center">No flight ticket added.</p>
+                    }
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card shadow-lg mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h3>Hotel Room</h3>
+                    </div>
+                    @if (Model.HotelRoom != null)
+                    {
+                        <img src="~/images/hotel_placeholder.jpg" alt="Hotel" class="card-img-top">
+                        <div class="card-body">
+                            <p><strong>Hotel:</strong> @Model.HotelRoom.Name</p>
+                            <p><strong>Rooms:</strong> @Model.NumberOfRooms</p>
+                            <p><strong>Price per Night:</strong> $@Model.HotelRoom.PricePerNight</p>
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-center">No hotel room added.</p>
+                    }
+                </div>
+            </div>
+
+            <div class="col-12 text-center my-3">
+                <h4>Total Price: $@Model.TotalPrice</h4>
+                <form asp-action="Checkout" method="post">
+                    <button type="submit" class="btn btn-primary btn-lg">Proceed to Checkout</button>
+                </form>
+            </div>
         }
-
-        <h4>Total Price: @Model.TotalPrice</h4>
-
-        <form asp-action="Checkout" method="post">
-            <button type="submit" class="btn btn-primary">Checkout</button>
-        </form>
     </div>
-}
+</div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@* @model HotelFlightMVC.Models.Cart
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Cart</title>
-    <link rel="stylesheet" href="~/css/style.css">
-</head>
-<body>
-    <h1>Your Cart</h1>
-
-    @if (Model == null || (Model.NumberOfTickets == 0 && Model.NumberOfRooms == 0))
-    {
-        <p>Your cart is empty. Please add items before proceeding to checkout.</p>
+<style>
+    .card {
+        border-radius: 15px;
     }
-    else
-    {
-        <h2>Flight Tickets</h2>
-        @if (Model.FlightTicket != null)
-        {
-            <div>
-                <h3>@Model.FlightTicket.Airline</h3>
-                <p>Price: @Model.FlightTicket.Price</p>
-                <p>Quantity: @Model.NumberOfTickets</p>
-            </div>
-        }
-
-        <h2>Hotel Rooms</h2>
-        @if (Model.HotelRoom != null)
-        {
-            <div>
-                <h3>@Model.HotelRoom.Name</h3>
-                <p>Price per Night: @Model.HotelRoom.PricePerNight</p>
-                <p>Quantity: @Model.NumberOfRooms</p>
-                <p>Nights: @Model.HotelRoom.Nights</p>
-            </div>
-        }
-
-        <h3>Total Price: @Model.TotalPrice</h3>
-
-        <form asp-action="Checkout" method="post">
-            <button type="submit">Proceed to Checkout</button>
-        </form>
+    .card-header {
+        font-weight: bold;
+        text-align: center;
     }
-
-    <a href="@Url.Action("Index", "Home")">Continue Shopping</a>
-</body>
-</html>
- *@
+    img.card-img-top {
+        height: 200px;
+        object-fit: cover;
+    }
+</style>
