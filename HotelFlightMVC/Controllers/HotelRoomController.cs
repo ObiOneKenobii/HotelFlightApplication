@@ -17,14 +17,14 @@ namespace HotelFlightMVC.Controllers
         // Get all available hotel rooms
         public async Task<IActionResult> Index()
         {
-            var hotelRooms = await _hotelRoomService.GetAllHotelRooms();
+            var hotelRooms = await _hotelRoomService.GetAllHotelRoomsAsync();
             return View(hotelRooms);
         }
 
         // Display details of a hotel room for booking (equivalent to "Buy")
         public async Task<IActionResult> Buy(int id)
         {
-            var hotelRoom = await _hotelRoomService.GetHotelRoom(id);
+            var hotelRoom = await _hotelRoomService.GetHotelRoomAsync(id);
             if (hotelRoom == null)
             {
                 return NotFound();
@@ -36,7 +36,7 @@ namespace HotelFlightMVC.Controllers
         [HttpPost]
         public async Task<IActionResult> BuyConfirmed(int id)
         {
-            var hotelRoom = await _hotelRoomService.GetHotelRoom(id);
+            var hotelRoom = await _hotelRoomService.GetHotelRoomAsync(id);
             if (hotelRoom != null)
             {
                 // Logic for handling booking (can be added to Cart)
@@ -65,7 +65,7 @@ namespace HotelFlightMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await _hotelRoomService.CreateHotelRoom(hotelRoom);
+                var result = await _hotelRoomService.CreateHotelRoomAsync(hotelRoom);
                 if (result)
                 {
                     return RedirectToAction(nameof(Index));
@@ -77,7 +77,7 @@ namespace HotelFlightMVC.Controllers
         // Edit HotelRoom view
         public async Task<IActionResult> Edit(int id)
         {
-            var hotelRoom = await _hotelRoomService.GetHotelRoom(id);
+            var hotelRoom = await _hotelRoomService.GetHotelRoomAsync(id);
             if (hotelRoom == null)
             {
                 return NotFound();
@@ -91,7 +91,7 @@ namespace HotelFlightMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await _hotelRoomService.UpdateHotelRoom(hotelRoom);
+                var result = await _hotelRoomService.UpdateHotelRoomAsync(hotelRoom);
                 if (result)
                 {
                     return RedirectToAction(nameof(Index));
@@ -103,7 +103,7 @@ namespace HotelFlightMVC.Controllers
         // Delete HotelRoom view
         public async Task<IActionResult> Delete(int id)
         {
-            var hotelRoom = await _hotelRoomService.GetHotelRoom(id);
+            var hotelRoom = await _hotelRoomService.GetHotelRoomAsync(id);
             if (hotelRoom == null)
             {
                 return NotFound();
@@ -116,7 +116,7 @@ namespace HotelFlightMVC.Controllers
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var result = await _hotelRoomService.DeleteHotelRoom(id);
+            var result = await _hotelRoomService.DeleteHotelRoomAsync(id);
             if (result)
             {
                 return RedirectToAction(nameof(Index));
