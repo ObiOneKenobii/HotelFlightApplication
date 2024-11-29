@@ -11,10 +11,11 @@
         public decimal TotalPrice => (FlightTicket?.Price ?? 0) * NumberOfTickets
                                    + (HotelRoom?.PricePerNight ?? 0) * NumberOfRooms * (HotelRoom?.Nights ?? 1);
 
-       
-          
-          public List<FlightTicket> FlightTickets { get; set; } = new List<FlightTicket>();
-        
+
+        public List<FlightTicket> FlightTickets { get; set; } = new List<FlightTicket>();
+        public List<HotelRoom> HotelRooms { get; set; } = new List<HotelRoom>();
+
+
 
     }
 

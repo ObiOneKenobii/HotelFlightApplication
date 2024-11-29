@@ -21,54 +21,77 @@
 <div class="container my-5">
     <h1 class="text-center" style="color: #007bff;">Your Cart</h1>
     <div class="row justify-content-center">
-        @if (Model.FlightTicket == null && Model.HotelRoom == null)
+        @if (!Model.FlightTickets.Any() && !Model.HotelRooms.Any())
         {
             <p class="text-center">Your cart is empty. Add items to proceed.</p>
         }
         else
         {
-            <div class="col-md-6">
-                <div class="card shadow-lg mb-4">
-                    <div class="card-header bg-primary text-white">
-                        <h3>Flight Ticket</h3>
-                    </div>
-                    @if (Model.FlightTicket != null)
-                    {
-                        <img src="~/images/flight_placeholder.jpg" alt="Flight" class="card-img-top">
-                        <div class="card-body">
-                            <p><strong>Flight:</strong> @Model.FlightTicket.Airline</p>
-                            <p><strong>Tickets:</strong> @Model.NumberOfTickets</p>
-                            <p><strong>Price:</strong> $@Model.FlightTicket.Price</p>
+            <!-- Display Flight Tickets -->
+            @if (Model.FlightTickets.Any())
+            {
+                <div class="col-md-6">
+                    <div class="card shadow-lg mb-4">
+                        <div class="card-header bg-primary text-white">
+                            <h3>Flight Tickets</h3>
                         </div>
-                    }
-                    else
-                    {
-                        <p class="text-center">No flight ticket added.</p>
-                    }
-                </div>
-            </div>
-
-            <div class="col-md-6">
-                <div class="card shadow-lg mb-4">
-                    <div class="card-header bg-primary text-white">
-                        <h3>Hotel Room</h3>
+                        @foreach (var ticket in Model.FlightTickets)
+                        {
+                            <img src="~/images/flight_placeholder.jpg" alt="Flight" class="card-img-top">
+                            <div class="card-body">
+                                <p><strong>Flight:</strong> @ticket.Airline</p>
+                                @* <p><strong>Tickets:</strong> @ticket.Quantity</p> *@
+                                <p><strong>Price per Ticket:</strong> $@ticket.Price</p>
+                            </div>
+                        }
                     </div>
-                    @if (Model.HotelRoom != null)
-                    {
-                        <img src="~/images/hotel_placeholder.jpg" alt="Hotel" class="card-img-top">
-                        <div class="card-body">
-                            <p><strong>Hotel:</strong> @Model.HotelRoom.Name</p>
-                            <p><strong>Rooms:</strong> @Model.NumberOfRooms</p>
-                            <p><strong>Price per Night:</strong> $@Model.HotelRoom.PricePerNight</p>
-                        </div>
-                    }
-                    else
-                    {
-                        <p class="text-center">No hotel room added.</p>
-                    }
                 </div>
-            </div>
+            }
+            else
+            {
+                <div class="col-md-6">
+                    <div class="card shadow-lg mb-4">
+                        <div class="card-header bg-primary text-white">
+                            <h3>Flight Tickets</h3>
+                        </div>
+                        <p class="text-center">No flight tickets added.</p>
+                    </div>
+                </div>
+            }
 
+            <!-- Display Hotel Rooms -->
+            @if (Model.HotelRooms.Any())
+            {
+                <div class="col-md-6">
+                    <div class="card shadow-lg mb-4">
+                        <div class="card-header bg-primary text-white">
+                            <h3>Hotel Rooms</h3>
+                        </div>
+                        @foreach (var room in Model.HotelRooms)
+                        {
+                            <img src="~/images/hotel_placeholder.jpg" alt="Hotel" class="card-img-top">
+                            <div class="card-body">
+                                <p><strong>Hotel:</strong> @room.Name</p>
+                               @*  <p><strong>Rooms:</strong> @room.Quantity</p> *@
+                                <p><strong>Price per Night:</strong> $@room.PricePerNight</p>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="col-md-6">
+                    <div class="card shadow-lg mb-4">
+                        <div class="card-header bg-primary text-white">
+                            <h3>Hotel Rooms</h3>
+                        </div>
+                        <p class="text-center">No hotel rooms added.</p>
+                    </div>
+                </div>
+            }
+
+            <!-- Display Total Price and Checkout Button -->
             <div class="col-12 text-center my-3">
                 <h4>Total Price: $@Model.TotalPrice</h4>
                 <form asp-action="Checkout" method="post">
@@ -83,10 +106,12 @@
     .card {
         border-radius: 15px;
     }
+
     .card-header {
         font-weight: bold;
         text-align: center;
     }
+
     img.card-img-top {
         height: 200px;
         object-fit: cover;

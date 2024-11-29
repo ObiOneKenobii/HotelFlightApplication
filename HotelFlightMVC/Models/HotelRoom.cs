@@ -8,6 +8,7 @@
         public int Capacity { get; set; }
         public decimal PricePerNight { get; set; }
         public int Nights { get; set; }
+        
     }
 
 }
